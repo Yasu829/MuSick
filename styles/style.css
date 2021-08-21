@@ -1,0 +1,106 @@
+body{
+  margin:0;
+  height:100vh;
+}
+input{
+  display:none;
+}
+#left_control{
+  background-color: rgb(160, 211, 255);
+  position: fixed;
+  left: 0;
+  height:100vh;
+  width:305px;
+}
+#control_top{
+  height:100px;
+  width:305px;
+  background-color: rgb(166, 150, 255);
+  position:fixed;
+  z-index: 100;
+}
+#list_wrapper{
+  height:10000px;
+  width:100%;
+}
+#list{
+  padding-left:20px;
+  margin: 0px;
+  margin-top: 105px;
+  height: 100vh;
+  width: 275px;
+  list-style: none;
+  overflow-y: scroll;
+}
+#list2{
+  padding-left:20px;
+  margin: 0px;
+  margin-top: 105px;
+  height: 100vh;
+  width: 275px;
+  list-style: none;
+}
+#list::-webkit-scrollbar {
+  display:none;
+}
+#content{
+  display: flex;
+  margin-top:5px;
+  margin-bottom:5px;
+  background-color: rgb(224, 240, 255);
+  height: 70px;
+  width: 100%;
+}
+#content:hover{
+  transition: 0.1s ;
+  border-top: 5px solid rgb(100, 180, 255) ;
+  border-bottom: 5px solid rgb(80, 180, 255) ;
+  cursor: pointer;
+}
+#content:hover > .icon2{
+  transform:scale(1.1)
+}
+#folder{
+  margin-top:5px;
+  margin-bottom:5px;
+}
+#folder_bar{
+  display: flex;
+  background-color: rgb(224, 240, 255);
+  height: 70px;
+  width: 100%;
+}
+#folder_bar:hover{
+  transition: 0.1s ;
+  border-top: 5px solid rgb(100, 180, 255) ;
+  border-bottom: 5px solid rgb(80, 180, 255) ;
+  cursor: pointer;
+
+}
+.icon_wrapper{
+  margin-left:2px;
+  margin-right:5px;
+  margin-top:15px;
+}
+.icon{
+  height:40px;
+  width: 40px;
+}
+.icon2{
+  height:32px;
+  width: 40px;
+}
+.name_wrapper{
+  flex: 1;
+  display:table;
+}
+p{
+  font-family:meiryo;
+  color:#444;
+  margin:0px;
+}
+.name{
+  font-size:18px;
+  display:table-cell;
+  vertical-align:middle;
+}
