@@ -99,9 +99,12 @@ p{
   display:table-cell;
   vertical-align:middle;
 }
-#player{
+#player_wrap{
   background-color: aliceblue;
   width:100vw;
   height:100vh;
-
+}
+#player{
+  width:0px;
+  height: 0px;
 }
