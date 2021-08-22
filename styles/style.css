@@ -2,7 +2,7 @@ body{
   margin:0;
   height:100vh;
 }
-input{
+.content_button{
   display:none;
 }
 #left_control{
@@ -26,7 +26,7 @@ input{
 #list{
   padding-left:20px;
   margin: 0px;
-  margin-top: 105px;
+  margin-top: 100px;
   height: 100vh;
   width: 275px;
   list-style: none;
@@ -43,7 +43,7 @@ input{
 #list::-webkit-scrollbar {
   display:none;
 }
-#content{
+.content{
   display: flex;
   margin-top:5px;
   margin-bottom:5px;
@@ -51,31 +51,26 @@ input{
   height: 70px;
   width: 100%;
 }
-#content:hover{
+.content:hover{
   transition: 0.1s ;
   border-top: 5px solid rgb(100, 180, 255) ;
   border-bottom: 5px solid rgb(80, 180, 255) ;
   cursor: pointer;
 }
-#content:hover > .icon2{
-  transform:scale(1.1)
-}
-#folder{
+.folder{
   margin-top:5px;
   margin-bottom:5px;
 }
-#folder_bar{
+.folder_bar{
   display: flex;
   background-color: rgb(224, 240, 255);
   height: 70px;
   width: 100%;
 }
-#folder_bar:hover{
+.folder_bar:hover{
   transition: 0.1s ;
   border-top: 5px solid rgb(100, 180, 255) ;
   border-bottom: 5px solid rgb(80, 180, 255) ;
-  cursor: pointer;
-
 }
 .icon_wrapper{
   margin-left:2px;
@@ -103,4 +98,10 @@ p{
   font-size:18px;
   display:table-cell;
   vertical-align:middle;
+}
+#player{
+  background-color: aliceblue;
+  width:100vw;
+  height:100vh;
+
 }

@@ -1,20 +1,22 @@
 {
+  "folders":[
+    "OrangeStar"
+  ],
   "musics":[
     {
-      "type": "song",
+      "name": "DAYBREAK FRONTLINE",
       "id": "emrt46SRyYs",
-      "name": "DAYBREAKFRONTLINE"
+      "folder": ""
     },
     {
-      "type": "folder",
-      "name": "OrangeStar",
-      "folder":[
-        {
-          "type": "song",
-          "id": "emrt46SRyYs",
-          "name": "DAYBREAKFRONTLINE"
-        }
-      ]
+      "name": "DAYBREAK FRONTLINE",
+      "id": "emrt46SRyYs",
+      "folder": ""
+    },
+    {
+      "name": "DAYBREAK FRONTLINE",
+      "id": "emrt46SRyYs",
+      "folder": ""
     }
   ]
 }
