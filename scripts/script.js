@@ -59,14 +59,15 @@ $.getJSON("data/list.json").done(function (json){
   $('.content').on('click', function() {
     if(!flag){
       $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + "?loop=1&playlist=" + $(this).attr("id") +"&controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#player").attr("src")).substr(31));
+      setTimeout(function(){player.playVideo();},1000);
       flag = true;
     }
     else{
-      $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + String($("#player").attr("src")).substr(41));
+      $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + "?loop=1&playlist=" + $(this).attr("id") + String($("#player").attr("src")).substr(69));
+      setTimeout(function(){player.playVideo();},1000);
     }
     $("#control_top").on("click", function(){
-        console.log("yes");
-        player.playVideo();
+        if(player.getPlayerState() == 1) player.stopVideo();
         return false;
     });
   });
