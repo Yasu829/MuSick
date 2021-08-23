@@ -6,16 +6,17 @@ body{
   display:none;
 }
 #left_control{
-  background-color: #242424;
+  /* background-color: #242424; */
   position: fixed;
+  z-index:2;
   left: 0;
   height:100vh;
   width: 420px;
 }
 #control_top{
   background-color: #242424;
-  height:60px;
-  width:420px;
+  height:80px;
+  width:250px;
   background-image: url("../images/logo-light.svg");
   background-repeat: no-repeat;
   background-size: contain;
@@ -25,6 +26,7 @@ body{
   cursor:pointer;
 }
 #list_wrapper{
+  background-color: #242424;
   height:calc(100vh - 138px);
   width:420px;
 }
@@ -111,7 +113,7 @@ p{
   background-color:#242424;
   z-index: 100;
   width:420px;
-  height:50px;
+  height:60px;
   margin:0px;
   padding:0px;
   display:flex;
@@ -123,11 +125,15 @@ p{
 }
 #musicup_inner{
   border-radius:10px;
-  height:100%;
+  height:80%;
+  z-index:4;
   margin-left:15%;
   margin-right:5%;
   width:70%;
   display:flex;
+}
+#musicup_inner:hover{
+  cursor:pointer;
 }
 #musicup_inner > p{
   display:table-cell;
@@ -153,13 +159,16 @@ p{
   margin-right:5px;
   width:70%;
   display:flex;
-  z-index:3;
+  z-index:4;
 }
 #lobby_inner > p{
   display:table-cell;
   color: #eee;
   margin-top:15px;
   margin-left:18px;
+}
+#lobby_inner:hover{
+  cursor:pointer;
 }
 #lobby_icon{
   margin-left: 10px;
@@ -169,10 +178,11 @@ p{
 }
 #queue{
   height:100px;
-  margin-left: 420px;
+  margin-left: 250px;
   background-color: #242424;
-  width: calc(100vw - 420px);
+  width: calc(100vw - 250px);
   position: fixed;
+  z-index:1;
 }
 #player_wrap{
   background-color:#202020;

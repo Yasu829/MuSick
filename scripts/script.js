@@ -30,6 +30,7 @@ function GetThumbNail(){
 let flag = false;
 let next = false;
 $.getJSON("data/list.json").done(function (json){
+  $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)")
   let FolderData;
   let MusicData;
   let flag = false;
