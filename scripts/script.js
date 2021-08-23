@@ -100,21 +100,18 @@ $.getJSON("data/list.json").done(function (json){
 });
 setInterval( function(){ let state = player.getPlayerState();  if ( state == YT.PlayerState.ENDED && next)
   {
-    console.log("yes"); 
     if($("#list li:last") == $("#" + $(this).attr("id"))) {
       $("#player").attr("src", "https://www.youtube.com/embed/" + $("#list li:first").attr("id")  /* + "?loop=1&playlist="  + $(this).attr("id") */ + String($("#player").attr("src")).substr(41));
       next = false;
       setTimeout(function(){player.playVideo();},1000);
     }
     else {
-      console.log(String($("#player").attr("src")).substr(30,11));
       $("#player").attr("src", "https://www.youtube.com/embed/" + $("#" + String($("#player").attr("src")).substr(30,11)).next().attr("id")  /* + "?loop=1&playlist="  + $(this).attr("id") */ + String($("#player").attr("src")).substr(41));
       next = false;
       setTimeout(function(){player.playVideo();},1000);
     }
   }
   else if(state == YT.PlayerState.PLAYING){
-    console.log("playing");
     next = true;
   }
 }, 100);
