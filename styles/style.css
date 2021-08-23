@@ -6,40 +6,38 @@ body{
   display:none;
 }
 #left_control{
-  background-color: rgb(160, 211, 255);
+  background-color: #242424;
   position: fixed;
   left: 0;
   height:100vh;
-  width:305px;
+  width: 420px;
 }
 #control_top{
-  height:100px;
-  width:305px;
-  background-color: rgb(166, 150, 255);
+  background-color: #242424;
+  height:60px;
+  width:420px;
+  background-image: url("../images/logo-light.svg");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: 30px;
   position:fixed;
   z-index: 100;
+  cursor:pointer;
 }
 #list_wrapper{
-  height:10000px;
-  width:100%;
+  height:calc(100vh - 138px);
+  width:420px;
 }
 #list{
   padding-left:20px;
   margin: 0px;
-  margin-top: 100px;
-  margin-bottom:100px;
-  height: 90vh;
-  width: 275px;
+  margin-top: 80px;
+  margin-bottom:120px;
+  height: calc(100vh - 150px);
+  width: 370px;
   list-style: none;
   overflow-y: scroll;
-}
-#list2{
-  padding-left:20px;
-  margin: 0px;
-  margin-top: 105px;
-  height: 100vh;
-  width: 275px;
-  list-style: none;
+  border-radius: 1px;
 }
 #list::-webkit-scrollbar {
   display:none;
@@ -48,14 +46,23 @@ body{
   display: flex;
   margin-top:5px;
   margin-bottom:5px;
-  background-color: rgb(224, 240, 255);
+  background-color: #303030;
+  border-radius:5px;
+  background-size:contain;
+  background-repeat: no-repeat;
+  background-position: right;
   height: 70px;
   width: 100%;
+  transition: 0.1s ;
 }
 .content:hover{
+  transform:scale(0.92);
   transition: 0.1s ;
-  border-top: 5px solid rgb(100, 180, 255) ;
-  border-bottom: 5px solid rgb(80, 180, 255) ;
+  background-color: #383838;
+  border-top: 2px solid #5168ff;
+  border-left: 3px solid #5168ff;
+  border-bottom: 2px solid #cbb1ff;
+  border-right: 3px solid #cbb1ff;
   cursor: pointer;
 }
 .folder{
@@ -87,21 +94,90 @@ body{
   width: 40px;
 }
 .name_wrapper{
-  flex: 1;
   display:table;
 }
 p{
   font-family:meiryo;
-  color:#444;
   margin:0px;
 }
 .name{
+  color:#b5b5b5;
+  width:220px;
   font-size:18px;
   display:table-cell;
   vertical-align:middle;
 }
+#control_switch{
+  background-color:#242424;
+  z-index: 100;
+  width:420px;
+  height:50px;
+  margin:0px;
+  padding:0px;
+  display:flex;
+}
+#musicup{
+  width:210px;
+  display:table-cell;
+  border-right: 1px solid black;
+}
+#musicup_inner{
+  border-radius:10px;
+  height:100%;
+  margin-left:15%;
+  margin-right:5%;
+  width:70%;
+  display:flex;
+}
+#musicup_inner > p{
+  display:table-cell;
+  color: #eee;
+  margin-top:15px;
+  margin-left:18px;
+  z-index:3;
+}
+#Musicup_icon{
+  margin-left: 10px;
+  margin-top: 10px;
+  height: 35px;
+  width: 35px;
+}
+#lobby{
+  width:210px;
+  display:table-cell;
+}
+#lobby_inner{
+  border-radius:10px;
+  height:100%;
+  margin-left:15%;
+  margin-right:5px;
+  width:70%;
+  display:flex;
+  z-index:3;
+}
+#lobby_inner > p{
+  display:table-cell;
+  color: #eee;
+  margin-top:15px;
+  margin-left:18px;
+}
+#lobby_icon{
+  margin-left: 10px;
+  margin-top: 10px;
+  height: 35px;
+  width: 35px;
+}
+#queue{
+  height:100px;
+  margin-left: 420px;
+  background-color: #242424;
+  width: calc(100vw - 420px);
+  position: fixed;
+}
 #player_wrap{
-  background-color: aliceblue;
+  background-color:#202020;
+  background-size:cover;
+  background-repeat: no-repeat;
   width:100vw;
   height:100vh;
 }
