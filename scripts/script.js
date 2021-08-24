@@ -1,12 +1,7 @@
-//"use strict";
-// 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// 3. This function creates an <iframe> (and YouTube player)
-//    after the API code downloads.
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player',{
@@ -30,7 +25,8 @@ function GetThumbNail(){
 let flag = false;
 let next = false;
 $.getJSON("data/list.json").done(function (json){
-  $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)")
+  $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
+  $("#musicup_icon").attr("src", "./images/MusiCup_selected.svg");
   let FolderData;
   let MusicData;
   let flag = false;
@@ -86,7 +82,7 @@ $.getJSON("data/list.json").done(function (json){
       $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/maxresdefault.jpg" + ")");
       setTimeout(function(){player.playVideo();},1000);
     }
-    $("#control_top").on("click", function(){
+    $("#MuSick_logo").on("click", function(){
       if(player.getPlayerState() == 1) player.stopVideo();
       return false;
     });
