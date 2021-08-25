@@ -9,37 +9,38 @@ function onYouTubeIframeAPIReady() {
     }
   });
 }
-
 function YTGetBackgroundImage(id, times){
-  let return_url;
+  let YTgetimage = new Image();
+  let best_url;
   switch(times){
     case 1:
-      return_url = "https://img.youtube.com/vi/" + id + "/default.jpg"
-      return return_url;
+      best_url = "https://img.youtube.com/vi/" + id + "/default.jpg";
+      return best_url;
+      break;
     case 2:
-      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      best_url = "https://img.youtube.com/vi/" + id + "/mqdefault.jpg";
       break;
     case 3:
-      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      best_url = "https://img.youtube.com/vi/" + id + "/hqdefault.jpg";
       break;
     case 4:
-      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      best_url = "https://img.youtube.com/vi/" + id + "/sddefault.jpg";
       break;
     case 5:
-      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      best_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg";
       break;
   }
-  let YTgetimage = new Image();
-  YTgetimage.crossOrigin = 'anonymous';
   YTgetimage.onload = function(){
-    if (YTgetimage.naturalWidth > 120) {
-      return return_url;
+    let wid = YTgetimage.naturalWidth;
+    if (wid > 120) {
+      $("#Background").css("background-image", "url(" + best_url + ")")
     }
-    else {
-      return YTGetBackgroundImage(id, times-1);
+    else{
+      times--;
+      YTGetBackgroundImage(id, times);
     }
   };
-  YTgetimage.src = return_url;
+  YTgetimage.src = best_url;
 }
 let flag = false;
 let next = false;
@@ -92,13 +93,13 @@ $.getJSON("data/list.json").done(function (json){
   $('.content').on('click', function() {
     if(!flag){
       $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + "?controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
-      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5) + ")");
+      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setTimeout(function(){MainPlayer.playVideo();},1000);
       flag = true;
     }
     else{
       $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + String($("#MainPlayer").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5) + ")");
+      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
     $("#MuSick_logo").on("click", function(){
@@ -114,14 +115,14 @@ setInterval( function(){ let state = MainPlayer.getPlayerState();  if ( state ==
     if($(".content").eq(-1).attr("id") == $("#MainPlayer").attr("src").substr(30,11)) {
       console.log("YYYYYESSS");
       $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(".content").eq(0).attr("id") + String($("#MainPlayer").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5) + ")");
+      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       next = false;
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
     else {
       console.log("NNOOOOOOOO");
       $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $("#" + String($("#MainPlayer").attr("src")).substr(30,11)).next().attr("id") + String($("#MainPlayer").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5)  + ")");
+      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       next = false;
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
