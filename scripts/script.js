@@ -73,13 +73,13 @@ $.getJSON("data/list.json").done(function (json){
   $('.content').on('click', function() {
     if(!flag){
       $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + "?controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#player").attr("src")).substr(31));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/maxresdefault.jpg" + ")");
+      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
       setTimeout(function(){player.playVideo();},1000);
       flag = true;
     }
     else{
       $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + String($("#player").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/maxresdefault.jpg" + ")");
+      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
       setTimeout(function(){player.playVideo();},1000);
     }
     $("#MuSick_logo").on("click", function(){
@@ -95,14 +95,14 @@ setInterval( function(){ let state = player.getPlayerState();  if ( state == YT.
     if($(".content").eq(-1).attr("id") == $("#player").attr("src").substr(30,11)) {
       console.log("YYYYYESSS");
       $("#player").attr("src", "https://www.youtube.com/embed/" + $(".content").eq(0).attr("id") + String($("#player").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/maxresdefault.jpg" + ")");
+      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
       next = false;
       setTimeout(function(){player.playVideo();},1000);
     }
     else {
       console.log("NNOOOOOOOO");
       $("#player").attr("src", "https://www.youtube.com/embed/" + $("#" + String($("#player").attr("src")).substr(30,11)).next().attr("id") + String($("#player").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/maxresdefault.jpg" + ")");
+      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
       next = false;
       setTimeout(function(){player.playVideo();},1000);
     }
