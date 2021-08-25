@@ -1,26 +1,45 @@
-var tag = document.createElement('script');
+let tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
+let firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-var player;
+let MainPlayer;
 function onYouTubeIframeAPIReady() {
-  player = new YT.Player('player',{
+  MainPlayer = new YT.Player('MainPlayer',{
     events: {
     }
   });
 }
-function GetThumbNail(){
-  var yturl = "サムネイルの画像URL";
-  var ytimg = new Image();
-  ytimg.onload(function(){
-    if (ytimg.naturalWidth > 120) {
-      // サムネイル画像ありの処理
+
+function YTGetBackgroundImage(id, times){
+  let return_url;
+  switch(times){
+    case 1:
+      return_url = "https://img.youtube.com/vi/" + id + "/default.jpg"
+      return return_url;
+    case 2:
+      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      break;
+    case 3:
+      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      break;
+    case 4:
+      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      break;
+    case 5:
+      return_url = "https://img.youtube.com/vi/" + id + "/maxresdefault.jpg"
+      break;
+  }
+  let YTgetimage = new Image();
+  YTgetimage.crossOrigin = 'anonymous';
+  YTgetimage.onload = function(){
+    if (YTgetimage.naturalWidth > 120) {
+      return return_url;
     }
     else {
-      //サムネイル画像なしの処理
+      return YTGetBackgroundImage(id, times-1);
     }
-  });
-  ytimg.src = yturl;
+  };
+  YTgetimage.src = return_url;
 }
 let flag = false;
 let next = false;
@@ -72,39 +91,39 @@ $.getJSON("data/list.json").done(function (json){
   }
   $('.content').on('click', function() {
     if(!flag){
-      $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + "?controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#player").attr("src")).substr(31));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
-      setTimeout(function(){player.playVideo();},1000);
+      $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + "?controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
+      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5) + ")");
+      setTimeout(function(){MainPlayer.playVideo();},1000);
       flag = true;
     }
     else{
-      $("#player").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + String($("#player").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
-      setTimeout(function(){player.playVideo();},1000);
+      $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(this).attr("id") + String($("#MainPlayer").attr("src")).substr(41));
+      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5) + ")");
+      setTimeout(function(){MainPlayer.playVideo();},1000);
     }
     $("#MuSick_logo").on("click", function(){
-      if(player.getPlayerState() == 1) player.stopVideo();
+      if(MainPlayer.getPlayerState() == 1) MainPlayer.stopVideo();
       return false;
     });
   });
 }).fail(function(){
   alert("jsonファイルの読み込みに失敗しました");
 });
-setInterval( function(){ let state = player.getPlayerState();  if ( state == YT.PlayerState.ENDED && next)
+setInterval( function(){ let state = MainPlayer.getPlayerState();  if ( state == YT.PlayerState.ENDED && next)
   {
-    if($(".content").eq(-1).attr("id") == $("#player").attr("src").substr(30,11)) {
+    if($(".content").eq(-1).attr("id") == $("#MainPlayer").attr("src").substr(30,11)) {
       console.log("YYYYYESSS");
-      $("#player").attr("src", "https://www.youtube.com/embed/" + $(".content").eq(0).attr("id") + String($("#player").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
+      $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(".content").eq(0).attr("id") + String($("#MainPlayer").attr("src")).substr(41));
+      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5) + ")");
       next = false;
-      setTimeout(function(){player.playVideo();},1000);
+      setTimeout(function(){MainPlayer.playVideo();},1000);
     }
     else {
       console.log("NNOOOOOOOO");
-      $("#player").attr("src", "https://www.youtube.com/embed/" + $("#" + String($("#player").attr("src")).substr(30,11)).next().attr("id") + String($("#player").attr("src")).substr(41));
-      $("#player_wrap").css("background-image", "url(" + "https://img.youtube.com/vi/" + String($("#player").attr("src")).substr(30,11) + "/0.jpg" + ")");
+      $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $("#" + String($("#MainPlayer").attr("src")).substr(30,11)).next().attr("id") + String($("#MainPlayer").attr("src")).substr(41));
+      $("#player_wrap").css("background-image", "url(" + YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5)  + ")");
       next = false;
-      setTimeout(function(){player.playVideo();},1000);
+      setTimeout(function(){MainPlayer.playVideo();},1000);
     }
   }
   else if(state == YT.PlayerState.PLAYING && !next){
