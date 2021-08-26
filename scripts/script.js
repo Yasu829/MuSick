@@ -113,14 +113,12 @@ $.getJSON("data/list.json").done(function (json){
 setInterval( function(){ let state = MainPlayer.getPlayerState();  if ( state == YT.PlayerState.ENDED && next)
   {
     if($(".content").eq(-1).attr("id") == $("#MainPlayer").attr("src").substr(30,11)) {
-      console.log("YYYYYESSS");
       $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $(".content").eq(0).attr("id") + String($("#MainPlayer").attr("src")).substr(41));
       YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       next = false;
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
     else {
-      console.log("NNOOOOOOOO");
       $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + $("#" + String($("#MainPlayer").attr("src")).substr(30,11)).next().attr("id") + String($("#MainPlayer").attr("src")).substr(41));
       YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       next = false;
