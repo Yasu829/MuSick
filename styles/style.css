@@ -61,10 +61,14 @@ body{
   transform:scale(0.92);
   transition: 0.1s ;
   background-color: #383838;
-  border-top: 2px solid #5168ff;
+  border-top: 4px solid #ff3b35;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-left: 4px solid #ff3b35;
+  /* border-top: 2px solid #5168ff;
   border-left: 3px solid #5168ff;
   border-bottom: 2px solid #cbb1ff;
-  border-right: 3px solid #cbb1ff;
+  border-right: 3px solid #cbb1ff; */
   cursor: pointer;
 }
 .folder{
