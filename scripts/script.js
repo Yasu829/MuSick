@@ -14,6 +14,29 @@ function onYouTubeIframeAPIReady() {
 }
 function YTonload(){
   player_flag = true;
+  $(window).keydown(function(e){
+    if(e.keyCode == 32){
+      if(MainPlayer_status == 1){
+        $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "paused");
+        MainPlayer.pauseVideo();
+      }
+      else if(MainPlayer_status == 2){
+        $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "running");
+        MainPlayer.playVideo();
+      }
+    }
+  });
+  $("#MuSick_logo").on("click", function(){
+    if(MainPlayer_status == 1){
+      $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "paused");
+      MainPlayer.pauseVideo();
+    }
+    else if(MainPlayer_status == 2){
+      $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "running");
+      MainPlayer.playVideo();
+    }
+    return false;
+  });
 };
 function setPlaying(){
   $("#" + $("#MainPlayer").attr("src").substr(30,11)).addClass("playing");
@@ -123,11 +146,6 @@ $.getJSON("data/list.json").done(function (json){
       setPlaying();
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
-    $("#MuSick_logo").on("click", function(){
-      if(MainPlayer_status == 1) MainPlayer.pauseVideo();
-      else if(MainPlayer_status == 2) MainPlayer.playVideo();
-      return false;
-    });
   });
 }).fail(function(){
   alert("jsonファイルの読み込みに失敗しました");
@@ -167,11 +185,6 @@ function loadFiles(file){
       setPlaying();
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
-    $("#MuSick_logo").on("click", function(){
-      if(MainPlayer_status == 1) MainPlayer.pauseVideo();
-      else if(MainPlayer_status == 2) MainPlayer.playVideo();
-      return false;
-    });
   });
   }
   fr.readAsText(file);
