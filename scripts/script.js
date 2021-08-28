@@ -21,12 +21,12 @@ function setPlaying(){
 function MainPlayerStarts(id){
   $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
   $("#title").html("Playing: " + $("#" + id).text());
-  $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
+  // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
 }
 function MainPlayerChange(id){
   $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + String($("#MainPlayer").attr("src")).substr(41));
   $("#title").html("Playing: " + $("#" + id).text());
-  $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
+  // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
 }
 function YTGetBackgroundImage(id, times){
   let YTgetimage = new Image();
