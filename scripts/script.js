@@ -84,7 +84,7 @@ function YTGetBackgroundImage(id, times){
   YTgetimage.src = best_url;
 }
 let flag = false;
-$.getJSON("data/list.json").done(function (json){
+$.getJSON("data/mizuno.json").done(function (json){
   $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
   $("#musicup_icon").attr("src", "./images/MusiCup_selected.svg");
   let FolderData;
