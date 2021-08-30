@@ -5,11 +5,17 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 let MainPlayer;
 let list_flag = false;
 let player_flag = false;
+
 function onYouTubeIframeAPIReady() {
   MainPlayer = new YT.Player('MainPlayer',{
     events: {
       "onReady": YTonload
     }
+  });
+}
+function hi() {
+  $("iframe").contents().find("html").contents().find("body").on("click", function(e){
+    alert("タップされた");
   });
 }
 function YTonload(){
@@ -42,15 +48,16 @@ function setPlaying(){
   $("#" + $("#MainPlayer").attr("src").substr(30,11)).addClass("playing");
 }
 function MainPlayerStarts(id){
-  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"controls=0&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
+  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=!&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
   $("#title").html("Playing: " + $("#" + id).text());
   // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
 }
 function MainPlayerChange(id){
-  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id + String($("#MainPlayer").attr("src")).substr(61));
+  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id + String($("#MainPlayer").attr("src")).substr(62));
   $("#title").html("Playing: " + $("#" + id).text());
   // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
 }
+
 function YTGetBackgroundImage(id, times){
   let YTgetimage = new Image();
   let best_url;
@@ -235,6 +242,7 @@ $(function(){
   });
 });
 let MainPlayer_status = -1;
+let related_flag = false;
 setInterval( function(){
   if(player_flag){
     let state = MainPlayer.getPlayerState();
@@ -258,6 +266,7 @@ setInterval( function(){
       MainPlayer_status = 0;
     }
     else if(state == YT.PlayerState.PLAYING && MainPlayer_status != 1){
+      flag = true;
       MainPlayer_status = 1;
     }
     else if(state == YT.PlayerState.PAUSED && MainPlayer_status != 2){
