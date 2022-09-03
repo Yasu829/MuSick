@@ -91,72 +91,72 @@ function YTGetBackgroundImage(id, times){
   YTgetimage.src = best_url;
 }
 let flag = false;
-$.getJSON("data/list.json").done(function (json){
-  $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
-  $("#musicup_icon").attr("src", "./images/MusiCup_selected.svg");
-  let FolderData;
-  let MusicData;
-  let flag = false;
-  let FolderMap = new Map();
-  let i = 0, j = 0;
-  let Folders = [];
-  let dummy = [];
-  let PlainMusic = [];
-  let n = 0;
-  FolderData = json.folders;
-  MusicData = json.musics;
-  for(i=0;i<Object.keys([FolderData]).length;i++){
-    FolderMap.set(FolderData[i], i);
-  }
-  for(i=0;i<Object.keys([FolderData]).length;i++){
-    Folders.push(dummy);
-  }
-  for(i=0;i<Object.keys(MusicData).length;i++){
-    if(MusicData[i].folder == "" || !FolderMap.has(MusicData[i].folder)){
-      PlainMusic.push({name : MusicData[i].name, id: MusicData[i].id});
-    }
-    else{
-      Folders[FolderMap.get(MusicData[i].folder)].push({name : MusicData[i].name, id: MusicData[i].id});
-    }
-  }
-  for(i=0;i<Object.keys(FolderData).length;i++){
-  }
-  for(i=0;i<PlainMusic.length;i++){
-    let el =
-    "<li class='content' id='" + PlainMusic[i].id + "'>" +
-    "<div class='icon_wrapper'>" +
-    "<img class='icon' src='images/ei-music.png'>" +
-    "</div>" +
-    "<div class='name_wrapper'>"+
-    "<p class='name'>"+ PlainMusic[i].name +"</p>"+
-    "</div>"+
-    "</li>";
-    document.getElementById("list").innerHTML += (el);
-    n++;
-  }
-  for(i=0;i<PlainMusic.length;i++){
-    $("#" + PlainMusic[i].id).css("background-image", "url(" + "https://img.youtube.com/vi/" + PlainMusic[i].id + "/default.jpg" + ")")
-  }
-  list_flag = true;
-  $('.content').on('click', function() {
-    if(!flag){
-      MainPlayerStarts(($(this).attr("id")));
-      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
-      setPlaying();
-      setTimeout(function(){MainPlayer.playVideo();},1500);
-      flag = true;
-    }
-    else{
-      $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
-      MainPlayerChange($(this).attr("id"));
-      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
-      setPlaying();
-      setTimeout(function(){MainPlayer.playVideo();},1500);
-    }
-  });
-}).fail(function(){
-  alert("jsonファイルの読み込みに失敗しました");
-});
+// $.getJSON("data/origin.json").done(function (json){
+//   $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
+//   $("#musicup_icon").attr("src", "./images/MusiCup_selected.svg");
+//   let FolderData;
+//   let MusicData;
+//   let flag = false;
+//   let FolderMap = new Map();
+//   let i = 0, j = 0;
+//   let Folders = [];
+//   let dummy = [];
+//   let PlainMusic = [];
+//   let n = 0;
+//   FolderData = json.folders;
+//   MusicData = json.musics;
+//   for(i=0;i<Object.keys([FolderData]).length;i++){
+//     FolderMap.set(FolderData[i], i);
+//   }
+//   for(i=0;i<Object.keys([FolderData]).length;i++){
+//     Folders.push(dummy);
+//   }
+//   for(i=0;i<Object.keys(MusicData).length;i++){
+//     if(MusicData[i].folder == "" || !FolderMap.has(MusicData[i].folder)){
+//       PlainMusic.push({name : MusicData[i].name, id: MusicData[i].id});
+//     }
+//     else{
+//       Folders[FolderMap.get(MusicData[i].folder)].push({name : MusicData[i].name, id: MusicData[i].id});
+//     }
+//   }
+//   for(i=0;i<Object.keys(FolderData).length;i++){
+//   }
+//   for(i=0;i<PlainMusic.length;i++){
+//     let el =
+//     "<li class='content' id='" + PlainMusic[i].id + "'>" +
+//     "<div class='icon_wrapper'>" +
+//     "<img class='icon' src='images/ei-music.png'>" +
+//     "</div>" +
+//     "<div class='name_wrapper'>"+
+//     "<p class='name'>"+ PlainMusic[i].name +"</p>"+
+//     "</div>"+
+//     "</li>";
+//     document.getElementById("list").innerHTML += (el);
+//     n++;
+//   }
+//   for(i=0;i<PlainMusic.length;i++){
+//     $("#" + PlainMusic[i].id).css("background-image", "url(" + "https://img.youtube.com/vi/" + PlainMusic[i].id + "/default.jpg" + ")")
+//   }
+//   list_flag = true;
+//   $('.content').on('click', function() {
+//     if(!flag){
+//       MainPlayerStarts(($(this).attr("id")));
+//       // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+//       setPlaying();
+//       setTimeout(function(){MainPlayer.playVideo();},1000);
+//       flag = true;
+//     }
+//     else{
+//       $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
+//       MainPlayerChange($(this).attr("id"));
+//       // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+//       setPlaying();
+//       setTimeout(function(){MainPlayer.playVideo();},1000);
+//     }
+//   });
+// }).fail(function(){
+//   alert("jsonファイルの読み込みに失敗しました");
+// });
 function loadFiles(file){
   let fr = new FileReader();
   fr.onload = function(event){
