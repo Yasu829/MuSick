@@ -141,17 +141,17 @@ $.getJSON("data/list.json").done(function (json){
   $('.content').on('click', function() {
     if(!flag){
       MainPlayerStarts(($(this).attr("id")));
-      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setPlaying();
-      setTimeout(function(){MainPlayer.playVideo();},1000);
+      setTimeout(function(){MainPlayer.playVideo();},1500);
       flag = true;
     }
     else{
       $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
       MainPlayerChange($(this).attr("id"));
-      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setPlaying();
-      setTimeout(function(){MainPlayer.playVideo();},1000);
+      setTimeout(function(){MainPlayer.playVideo();},1500);
     }
   });
 }).fail(function(){
@@ -180,7 +180,7 @@ function loadFiles(file){
   $('.content').on('click', function() {
     if(!flag){
       MainPlayerStarts(($(this).attr("id")));
-      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setPlaying();
       setTimeout(function(){MainPlayer.playVideo();},1000);
       flag = true;
@@ -188,7 +188,7 @@ function loadFiles(file){
     else{
       $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
       MainPlayerChange($(this).attr("id"));
-      YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setPlaying();
       setTimeout(function(){MainPlayer.playVideo();},1000);
     }
@@ -250,7 +250,7 @@ setInterval( function(){
       if($(".content").eq(-1).attr("id") == $("#MainPlayer").attr("src").substr(30,11)) {
         $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
         MainPlayerChange($(".content").eq(0).attr("id"))
-        YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+        // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
         setPlaying();
         next = false;
         setTimeout(function(){MainPlayer.playVideo();},1000);
@@ -258,7 +258,7 @@ setInterval( function(){
       else {
         $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
         MainPlayerChange($("#" + String($("#MainPlayer").attr("src")).substr(30,11)).next().attr("id"));
-        YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+        // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
         setPlaying();
         next = false;
         setTimeout(function(){MainPlayer.playVideo();},1000);

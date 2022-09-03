@@ -1,0 +1,46 @@
+/*-----スマホ向けの記述-----*/
+@media screen and (max-width: 479px) {
+  #left_control{
+    width: 100vw;
+    background-color: #242424;
+  }
+  #MuSick_logo{
+    background-color: #242424;
+    height: calc(80vw * 6 / 23);
+    width:80vw;
+    margin-left: 5vw;
+  }
+  #list_edit{
+    width:calc(100vw - 20px);
+    margin-top: calc(80vw * 6 / 23);
+  }
+  #list_wrapper{
+    background-color: #242424;
+    height:calc(100vh - (80vw * 6 / 23) - 120px);
+    width:calc(100vw - 8px);
+  }
+  #list{
+    height: calc(100vh - (80vw * 6 / 23) - 135px);
+    border-right:15px solid #202020;
+    border-left:15px solid #202020;
+    width: calc(100vw - 55px);
+  }
+  .content{
+    height: 60px;
+  }
+  .name{
+    width:calc(100vw - 180px);
+  }
+  #control_switch{
+    width:100vw;
+  }
+  #musicup{
+    width:50vw;
+  }
+  #lobby{
+    width:50vw;
+  }
+  #Background{
+    display: none;
+  }
+}

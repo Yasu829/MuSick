@@ -2,9 +2,9 @@ body{
   margin:0;
   height:100vh;
 }
-.content_button{
+/* .content_button{
   display:none;
-}
+} */
 #left_control{
   /* background-color: #242424; */
   position: fixed;
