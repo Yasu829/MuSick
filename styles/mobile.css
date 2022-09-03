@@ -16,11 +16,11 @@
   }
   #list_wrapper{
     background-color: #242424;
-    height:calc(100vh - (80vw * 6 / 23) - 200px);
+    height:calc(100vh - (80vw * 6 / 23) - 170px);
     width:calc(100vw - 8px);
   }
   #list{
-    height: calc(100vh - (80vw * 6 / 23) - 210px);
+    height: calc(100vh - (80vw * 6 / 23) - 180px);
     border-right:15px solid #202020;
     border-left:15px solid #202020;
     width: calc(100vw - 55px);
