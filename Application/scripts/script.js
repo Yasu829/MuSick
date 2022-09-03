@@ -121,7 +121,11 @@ $.getJSON("index.json").done(function(json){
   }
   $('.disc').on('click', function() {
     MainPlayerReset();
-    readDisc(($(this).attr("id")));
+    if($(this).attr("id") == "local_storage"){
+    }
+    else{
+      readDisc(($(this).attr("id")));
+    }
   });
 })
 function readDisc(url){
@@ -226,6 +230,7 @@ $(function(){
     event.preventDefault();
     $('#MuSick_logo').css('background-color', '#242424');
   });
+
   $("#MuSick_logo").on("drop", function(event){
     event.preventDefault();
     $("#input_file")[0].files = event.originalEvent.dataTransfer.files;
