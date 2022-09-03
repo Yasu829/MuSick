@@ -11,7 +11,8 @@
     margin-left: 5vw;
   }
   #list_edit{
-    width:calc(100vw - 20px);
+    width:calc(100vw - 35px);
+    margin-left:8px;
     margin-top: calc(80vw * 6 / 23);
   }
   #list_wrapper{
