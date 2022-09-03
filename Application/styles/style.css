@@ -198,6 +198,53 @@ p{
   width:417px;
   display: none;
 }
+#playlists{
+  padding-left:0;
+  margin: 0px;
+  margin-top: 0px;
+  margin-bottom:120px;
+  margin-left: 10px;
+  padding-top:3px;
+  padding-bottom:5px;
+  height: calc(100vh - 180px);
+  background-color: #202020;
+  border-right:20px solid #202020;
+  border-left:15px solid #202020;
+  width: 360px;
+  list-style: none;
+  overflow-y: scroll;
+  overflow-x:hidden;
+  border-radius: 1px;
+}
+#playlists::-webkit-scrollbar {
+  display:none;
+}
+.disc{
+  display: flex;
+  margin-top:5px;
+  margin-bottom:5px;
+  background-color: #303030;
+  border-radius:5px;
+  height: 70px;
+  width: 100%;
+  transition: 0.1s;
+}
+.disc:hover{
+  transition: 0.1s ;
+  background-color: #383838;
+  cursor: pointer;
+}
+#playlists .icon_wrapper{
+  margin-left:5px;
+  margin-right:5px;
+  margin-top:15px;
+}
+#playlists .name_wrapper{
+  margin-left: 5px;
+}
+#playlists .name{
+  width:auto;
+}
 
 #control_switch{
   background-color:#242424;
@@ -264,7 +311,7 @@ p{
 #lobby_icon{
   margin-left: 10px;
   margin-top: 10px;
-  height: 35px;
+  height: 25px;
   width: 35px;
 }
 #PlayTable{
