@@ -1,0 +1,61 @@
+body{
+  margin:0;
+  background-color: #303030;
+  overflow-x: hidden;
+}
+#header{
+  margin-top:0;
+  background-color: #242424;
+  max-height: calc(40vw * 6 / 23 + 20px);
+  height:140px;
+  min-height: 70px;
+  width:100vw;
+}
+#MuSick_logo{
+  background-color: #242424;
+  max-width: 40vw;
+  max-height: calc(40vw * 6 / 23);
+  height:120px;
+  width:460px;
+  min-width: 260px;
+  min-height: 60px;
+  background-image: url("../../logo.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position-x: 10px;
+  background-position-y: 1px;
+  z-index: 100;
+  cursor:pointer;
+}
+#img1{
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+  background-image: url("image1.jpg");
+  background-size: cover;
+  width: 100vw;
+  height: 60vw;
+  border:3px #242424 solid;
+  transition: opacity 1s;
+  opacity: 1;
+}
+#img1:hover{
+  opacity: 0.6;
+
+ }
+/* h2{
+  margin-right:0;
+  background-color: #242424;
+  padding-top:30px;
+  padding-bottom: 30px;;
+  text-align: center;
+  font-size:40px;
+  color:#e5e5e5;
+  font-family: "Helvetica Neue",
+  Arial,
+  "Hiragino Kaku Gothic ProN",
+  "Hiragino Sans",
+  Meiryo,
+  sans-serif;
+  font-weight:lighter;
+} */
