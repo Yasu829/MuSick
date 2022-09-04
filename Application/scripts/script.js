@@ -220,50 +220,6 @@ $(function(){
     $("#list_wrapper").css("display","none");
     $("#playlists_wrapper").css("display","block");
   })
-  $("#MuSick_logo").on("dragenter dragover", function(event){
-    event.stopPropagation();
-    event.preventDefault();
-    $("#MuSick_logo").css("background-color", "rgb(200,200,200)");
-  });
-  $('#MuSick_logo').on('dragleave', function (event) {
-    event.stopPropagation();
-    event.preventDefault();
-    $('#MuSick_logo').css('background-color', '#242424');
-  });
-
-  $("#MuSick_logo").on("drop", function(event){
-    event.preventDefault();
-    $("#input_file")[0].files = event.originalEvent.dataTransfer.files;
-    console.log($("#input_file")[0].files);
-    if($("#input_file")[0].files.length > 1){
-      alert("一つまででお願いします");
-      $("#input_file").val("");
-      $("#MuSick_logo").css("background-color", "#242424");
-      return;
-    }
-    else if($("#input_file")[0].files[0].type != "application/json"){
-      alert("jsonファイルでお願いします")
-      $("#MuSick_logo").css("background-color", "#242424");
-      return;
-    }
-    loadFiles($("#input_file")[0].files[0]);
-    $("#MuSick_logo").css("background-color", "#242424");
-  });
-  $("file").on("change", function(){
-    if(this.files.length > 1){
-      alert("一つまででお願いします");
-      $("#input_file").val("");
-      $("#MuSick_logo").css("background-color", "#242424");
-      return;
-    }
-    else if($("#input_file")[0].files[0].type != "application/json"){
-      alert("jsonファイルでお願いします")
-      $("#MuSick_logo").css("background-color", "#242424");
-      return;
-    }
-    loadFiles($("#input_file")[0].files[0]);
-    $("#MuSick_logo").css("background-color", "#242424");
-  });
 });
 let MainPlayer_status = -1;
 let related_flag = false;
