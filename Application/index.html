@@ -21,15 +21,14 @@
     <div id="list_edit">
       <p id="title">Playing:</p>
     </div>
-      <input type="file" id="input_file">
       <div id="list_wrapper">
         <ul id="list">
         </ul>
       </div>
       <div id="playlists_wrapper">
         <ul id="playlists">
-          <label>
-            <input type="file" id="local_disc" hidden />
+          <label for="input_file">
+            <input type="file" id="input_file" onchange="changed(this)" hidden />
             <li id='local_storage' class="disc">
               <div class='icon_wrapper'>
               <img class='icon2' src='images/upload_light.svg'>

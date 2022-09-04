@@ -127,6 +127,34 @@ $.getJSON("index.json").done(function(json){
       readDisc(($(this).attr("id")));
     }
   });
+  $("#local_storage").on("dragenter dragover", function(event){
+    event.stopPropagation();
+    event.preventDefault();
+    $("#local_storage").css("background-color", "rgb(220,220,220)");
+  });
+  $('#local_storage').on('dragleave', function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+    $('#local_storage').css('background-color', '#303030');
+  });
+  $("#local_storage").on("drop", function(event){
+    event.preventDefault();
+    $("#input_file")[0].files = event.origit.dataTransfer.files;
+    console.log($("#input_file")[0].files);
+    if($("#input_file")[0].files.length > 1){
+      alert("一つまででお願いします");
+      $("#input_file").val("");
+      $("#local_storage").css("background-color", "#303030");
+      return;
+    }
+    else if($("#input_file")[0].files[0].type != "application/json"){
+      alert("jsonファイルでお願いします")
+      $("#local_storage").css("background-color", "#303030");
+      return;
+    }
+    loadFiles($("#input_file")[0].files[0]);
+    $("#local_storage").css("background-color", "#303030");
+  });
 })
 function readDisc(url){
   $.getJSON("data/" + url + ".json").done(function (json){
@@ -213,14 +241,31 @@ $(function(){
     $("#lobby_inner").css("background-color","");
     $("#list_wrapper").css("display","block");
     $("#playlists_wrapper").css("display","none");
-  })
+  });
   $("#lobby_inner").on("click", function(){
     $("#musicup_inner").css("background-color","");
     $("#lobby_inner").css("background-color","rgba(255,255,255,0.3)");
     $("#list_wrapper").css("display","none");
     $("#playlists_wrapper").css("display","block");
-  })
+  });
 });
+function changed(file){
+  console.log(file.files[0]);
+  if(file.files.length > 1){
+    alert("一つまででお願いします");
+    $("#input_file").val("");
+    $("#local_storage").css("background-color", "#303030");
+    return;
+  }
+  else if(file.files[0].type != "application/json"){
+    alert("jsonファイルでお願いします")
+    $("#local_storage").css("background-color", "#303030");
+    return;
+  }
+  console.log(file.files[0]);
+  loadFiles(file.files[0]);
+  $("#local_storage").css("background-color", "#303030");
+}
 let MainPlayer_status = -1;
 let related_flag = false;
 setInterval( function(){
