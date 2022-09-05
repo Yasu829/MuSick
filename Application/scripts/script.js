@@ -1,12 +1,11 @@
-let tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-let firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-let MainPlayer;
+// 変数たち
+let isPlayerAvailable = false;
 let list_flag = false;
-let player_flag = false;
 let flag = false;
-
+// Youtube Player APIセットアップ
+let tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
+let firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+let MainPlayer;
 function onYouTubeIframeAPIReady() {
   MainPlayer = new YT.Player('MainPlayer',{
     events: {
@@ -14,40 +13,30 @@ function onYouTubeIframeAPIReady() {
     }
   });
 }
-function hi() {
-  $("iframe").contents().find("html").contents().find("body").on("click", function(e){
-    alert("タップされた");
-  });
+// [便利関数] Youtube Playerを与えたIDで再生させ始める関数
+function MainPlayerStarts(id){
+  
 }
-function YTonload(){
-  player_flag = true;
-  $(window).keydown(function(e){
-    if(e.keyCode == 32){
-      if(MainPlayer_status == 1){
-        $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "paused");
-        MainPlayer.pauseVideo();
-      }
-      else if(MainPlayer_status == 2){
-        $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "running");
-        MainPlayer.playVideo();
-      }
-    }
-  });
-  $("#MuSick_logo").on("click", function(){
-    if(MainPlayer_status == 1){
-      $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "paused");
-      MainPlayer.pauseVideo();
-    }
-    else if(MainPlayer_status == 2){
-      $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "running");
-      MainPlayer.playVideo();
-    }
-    return false;
-  });
-};
-function setPlaying(){
-  $("#" + $("#MainPlayer").attr("src").substr(30,11)).addClass("playing");
+// [便利関数]　Youtube Playerを与えたIDで曲変する関数
+function MainPlayerChange(id){
+  
 }
+// [便利関数]　Youtube Playerで与えたIDの曲を再生する関数
+function MainPlayerPlay(id){
+  // 未だ嘗て再生されたことがない場合
+  if(!flag){
+    $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=!&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
+    flag = true;
+  }
+  else{
+    $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
+    $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id + String($("#MainPlayer").attr("src")).substr(62));
+  }
+  $("#title").html("Playing: " + $("#" + id).text());
+  setTimeout(function(){MainPlayer.playVideo();},1000);
+  setPlaying();
+}
+// [便利関数] Youtube Playerの状態をリセットする関数
 function MainPlayerReset(){
   $(".playing").removeClass("playing");
   MainPlayer.pauseVideo();
@@ -58,20 +47,21 @@ function MainPlayerReset(){
   else{
     $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + "-----------" + "?playlist=" + "-----------" + String($("#MainPlayer").attr("src")).substr(62));
   }
+  
   $("#title").html("Playing: ");
 }
-
-function MainPlayerStarts(id){
-  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=!&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
-  $("#title").html("Playing: " + $("#" + id).text());
-  // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
+// [便利関数] 一時停止と再生中を切り替える関数
+function switchPausePlay(){
+  if(MainPlayer_status == 1){
+    $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "paused");
+    MainPlayer.pauseVideo();
+  }
+  else if(MainPlayer_status == 2){
+    $("#" + $("#MainPlayer").attr("src").substr(30,11)).css("animation-play-state", "running");
+    MainPlayer.playVideo();
+  }
 }
-function MainPlayerChange(id){
-  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id + String($("#MainPlayer").attr("src")).substr(62));
-  $("#title").html("Playing: " + $("#" + id).text());
-  // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
-}
-
+// [便利関数] 与えられたIDの動画のサムネイルを取得する再帰関数。ユーザーはtimesに5を与える
 function YTGetBackgroundImage(id, times){
   let YTgetimage = new Image();
   let best_url;
@@ -104,6 +94,27 @@ function YTGetBackgroundImage(id, times){
   };
   YTgetimage.src = best_url;
 }
+
+// [仕様関数] 曲ブロックを光らせる状態にする関数
+function setPlaying(){
+  $("#" + $("#MainPlayer").attr("src").substr(30,11)).addClass("playing");
+}
+// Youtube Player が立ち上がったら実行する関数
+function YTonload(){
+  isPlayerAvailable = true;
+  // スペースかロゴを押したら一時停止と再生を切り替える
+  $(window).keydown(function(e){
+    if(e.keyCode == 32){
+      switchPausePlay();
+    }
+  });
+  $("#MuSick_logo").on("click", function(){
+    switchPausePlay()
+  });
+};
+
+
+
 $.getJSON("index.json").done(function(json){
   const DiscData = json;
   let i = 0;
@@ -176,20 +187,7 @@ function readDisc(url){
       }
       list_flag = true;
     $('.content').on('click', function() {
-      if(!flag){
-        MainPlayerStarts(($(this).attr("id")));
-        // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
-        setPlaying();
-        setTimeout(function(){MainPlayer.playVideo();},1000);
-        flag = true;
-      }
-      else{
-        $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
-        MainPlayerChange($(this).attr("id"));
-        // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
-        setPlaying();
-        setTimeout(function(){MainPlayer.playVideo();},1000);
-      }
+      MainPlayerPlay(($(this).attr("id")));
     });
   }).fail(function(){
     alert("jsonファイルの読み込みに失敗しました");
@@ -217,14 +215,13 @@ function loadFiles(file){
     list_flag = true;
   $('.content').on('click', function() {
     if(!flag){
-      MainPlayerStarts(($(this).attr("id")));
+      MainPlayerStarts();
       // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setPlaying();
       setTimeout(function(){MainPlayer.playVideo();},1000);
       flag = true;
     }
     else{
-      $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
       MainPlayerChange($(this).attr("id"));
       // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
       setPlaying();
@@ -269,7 +266,7 @@ function changed(file){
 let MainPlayer_status = -1;
 let related_flag = false;
 setInterval( function(){
-  if(player_flag){
+  if(isPlayerAvailable){
     let state = MainPlayer.getPlayerState();
     if ( state == YT.PlayerState.ENDED && MainPlayer_status != 0){
       if($(".content").eq(-1).attr("id") == $("#MainPlayer").attr("src").substr(30,11)) {
