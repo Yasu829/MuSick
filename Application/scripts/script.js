@@ -62,7 +62,7 @@ function MainPlayerReset(){
 }
 
 function MainPlayerStarts(id){
-  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=!&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
+  $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=1&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
   $("#title").html("Playing: " + $("#" + id).text());
   // $("#playing_icon").css("background-image", "url(" + "https://img.youtube.com/vi/" + id + "/default.jpg" + ")")
 }
