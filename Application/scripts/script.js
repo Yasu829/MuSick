@@ -25,7 +25,7 @@ function MainPlayerChange(id){
 function MainPlayerPlay(id){
   // 未だ嘗て再生されたことがない場合
   if(!flag){
-    $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=!&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
+    $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=0&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
     flag = true;
   }
   else{
