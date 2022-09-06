@@ -1,7 +1,6 @@
 // 変数たち
 let isPlayerAvailable = false;
-let list_flag = false;
-let flag = false;
+let isPlayerOnceUsed = false;
 // Youtube Player APIセットアップ
 let tag = document.createElement('script'); tag.src = "https://www.youtube.com/iframe_api";
 let firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -13,36 +12,40 @@ function onYouTubeIframeAPIReady() {
     }
   });
 }
-// [便利関数] Youtube Playerを与えたIDで再生させ始める関数
-function MainPlayerStarts(id){
-  
-}
-// [便利関数]　Youtube Playerを与えたIDで曲変する関数
-function MainPlayerChange(id){
-  
-}
+// [必須関数] Youtube Player が立ち上がったら実行する関数
+function YTonload(){
+  isPlayerAvailable = true;
+  // スペースかロゴを押したら一時停止と再生を切り替える
+  $(window).keydown(function(e){
+    if(e.keyCode == 32){
+      switchPausePlay();
+    }
+  });
+  $("#MuSick_logo").on("click", function(){
+    switchPausePlay()
+  });
+};
 // [便利関数]　Youtube Playerで与えたIDの曲を再生する関数
 function MainPlayerPlay(id){
   // 未だ嘗て再生されたことがない場合
-  if(!flag){
+  if(!isPlayerOnceUsed){
     $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id +"&fs=0&loop=0&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
-    flag = true;
+    isPlayerOnceUsed = true;
   }
   else{
     $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
     $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + id + "?playlist=" + id + String($("#MainPlayer").attr("src")).substr(62));
   }
   $("#title").html("Playing: " + $("#" + id).text());
-  setTimeout(function(){MainPlayer.playVideo();},1000);
-  setPlaying();
+  setTimeout(function(){MainPlayer.playVideo(); setPlaying();},1000);
 }
 // [便利関数] Youtube Playerの状態をリセットする関数
 function MainPlayerReset(){
   $(".playing").removeClass("playing");
   MainPlayer.pauseVideo();
-  if(!flag){
+  if(!isPlayerOnceUsed){
     $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + "-----------" + "?playlist=" + "-----------" +"&fs=0&loop=0&controls=1&disablekb=1&modestbranding=1&rel=0&"  + String($("#MainPlayer").attr("src")).substr(31));
-    flag = true;
+    isPlayerOnceUsed = true;
   }
   else{
     $("#MainPlayer").attr("src", "https://www.youtube.com/embed/" + "-----------" + "?playlist=" + "-----------" + String($("#MainPlayer").attr("src")).substr(62));
@@ -94,50 +97,113 @@ function YTGetBackgroundImage(id, times){
   };
   YTgetimage.src = best_url;
 }
-
 // [仕様関数] 曲ブロックを光らせる状態にする関数
 function setPlaying(){
   $("#" + $("#MainPlayer").attr("src").substr(30,11)).addClass("playing");
 }
-// Youtube Player が立ち上がったら実行する関数
-function YTonload(){
-  isPlayerAvailable = true;
-  // スペースかロゴを押したら一時停止と再生を切り替える
-  $(window).keydown(function(e){
-    if(e.keyCode == 32){
-      switchPausePlay();
-    }
-  });
-  $("#MuSick_logo").on("click", function(){
-    switchPausePlay()
-  });
-};
-
-
-
-$.getJSON("index.json").done(function(json){
-  const DiscData = json;
-  let i = 0;
-  for(i=0;i<DiscData.length;i++){
+// [便利関数] collectionファイルを読み込む関数
+function loadCollections(json){
+  for(let i=0;i<json.length;i++){
     let el = 
-    "<li class='disc' id='" + DiscData[i].id + "'>" +
+    "<li class='disc' id='" + json[i].id + "'>" +
     "<div class='icon_wrapper'>" +
     "<img class='icon' src='images/disc.svg'>" +
     "</div>" +
     "<div class='name_wrapper'>"+
-    "<p class='name'>"+ DiscData[i].name +"</p>"+
+    "<p class='name'>"+ json[i].name +"</p>"+
     "</div>"+
     "</li>";
     document.getElementById("playlists").innerHTML += (el);
   }
+}
+// [便利関数] discファイルを読み込む関数
+function readDisc(json){
+  $("#list").html("");
+  for(let i=0;i<json.musics.length;i++){
+    document.getElementById("list").innerHTML += 
+    "<li class='content' id='" + json.musics[i].id + "'>" +
+    "<div class='icon_wrapper'>" +
+    "<img class='icon' src='images/ei-music.png'>" +
+    "</div>" +
+    "<div class='name_wrapper'>"+
+    "<p class='name'>"+ json.musics[i].name +"</p>"+
+    "</div>"+
+    "</li>";
+  }
+  for(i=0;i<json.musics.length;i++){
+    $("#" + json.musics[i].id).css("background-image", "url(" + "https://img.youtube.com/vi/" + json.musics[i].id + "/default.jpg" + ")")
+  }
+  $('.content').on('click', function() {
+    MainPlayerPlay(($(this).attr("id")));
+  });
+}
+// [必須関数] index.jsonを読み込む関数
+$.getJSON("index.json").done(function(json){
+  loadCollections(json);
+  // discを読み込む処理
   $('.disc').on('click', function() {
     MainPlayerReset();
-    if($(this).attr("id") == "local_storage"){
-    }
-    else{
-      readDisc(($(this).attr("id")));
+    if($(this).attr("id") != "local_storage"){
+      $.getJSON("data/" + $(this).attr("id") + ".json").done(function (json){
+        readDisc(json);
+      }).fail(function(){
+        alert("jsonファイルの読み込みに失敗しました");
+      });
     }
   });
+})
+function loadFiles(file){
+  let fr = new FileReader();
+  fr.onload = function(event){
+    let jeison = JSON.parse(event.target.result);
+    $("#list").html("");
+    for(let i=0;i<jeison.musics.length;i++){
+      document.getElementById("list").innerHTML += 
+      "<li class='content' id='" + jeison.musics[i].id + "'>" +
+      "<div class='icon_wrapper'>" +
+      "<img class='icon' src='images/ei-music.png'>" +
+      "</div>" +
+      "<div class='name_wrapper'>"+
+      "<p class='name'>"+ jeison.musics[i].name +"</p>"+
+      "</div>"+
+      "</li>";
+    }
+    for(i=0;i<jeison.musics.length;i++){
+      $("#" + jeison.musics[i].id).css("background-image", "url(" + "https://img.youtube.com/vi/" + jeison.musics[i].id + "/default.jpg" + ")")
+    }
+  $('.content').on('click', function() {
+    if(!isPlayerOnceUsed){
+      MainPlayerStarts();
+      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+      setPlaying();
+      setTimeout(function(){MainPlayer.playVideo();},1000);
+      isPlayerOnceUsed = true;
+    }
+    else{
+      MainPlayerChange($(this).attr("id"));
+      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
+      setPlaying();
+      setTimeout(function(){MainPlayer.playVideo();},1000);
+    }
+  });
+  }
+  fr.readAsText(file);
+}
+$(function(){
+  $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
+  $("#musicup_inner").on("click",function(){
+    $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
+    $("#lobby_inner").css("background-color","");
+    $("#list_wrapper").css("display","block");
+    $("#playlists_wrapper").css("display","none");
+  });
+  $("#lobby_inner").on("click", function(){
+    $("#musicup_inner").css("background-color","");
+    $("#lobby_inner").css("background-color","rgba(255,255,255,0.3)");
+    $("#list_wrapper").css("display","none");
+    $("#playlists_wrapper").css("display","block");
+  });
+  // Local Storageファイル参照をドラッグアンドドロップで使えるようにする
   $("#local_storage").on("dragenter dragover", function(event){
     event.stopPropagation();
     event.preventDefault();
@@ -166,85 +232,6 @@ $.getJSON("index.json").done(function(json){
     loadFiles($("#input_file")[0].files[0]);
     $("#local_storage").css("background-color", "#303030");
   });
-})
-function readDisc(url){
-  $.getJSON("data/" + url + ".json").done(function (json){
-      let J_ = json;
-      $("#list").html("");
-      for(let i=0;i<J_.musics.length;i++){
-        document.getElementById("list").innerHTML += 
-        "<li class='content' id='" + J_.musics[i].id + "'>" +
-        "<div class='icon_wrapper'>" +
-        "<img class='icon' src='images/ei-music.png'>" +
-        "</div>" +
-        "<div class='name_wrapper'>"+
-        "<p class='name'>"+ J_.musics[i].name +"</p>"+
-        "</div>"+
-        "</li>";
-      }
-      for(i=0;i<J_.musics.length;i++){
-        $("#" + J_.musics[i].id).css("background-image", "url(" + "https://img.youtube.com/vi/" + J_.musics[i].id + "/default.jpg" + ")")
-      }
-      list_flag = true;
-    $('.content').on('click', function() {
-      MainPlayerPlay(($(this).attr("id")));
-    });
-  }).fail(function(){
-    alert("jsonファイルの読み込みに失敗しました");
-  });
-}
-function loadFiles(file){
-  let fr = new FileReader();
-  fr.onload = function(event){
-    let jeison = JSON.parse(event.target.result);
-    $("#list").html("");
-    for(let i=0;i<jeison.musics.length;i++){
-      document.getElementById("list").innerHTML += 
-      "<li class='content' id='" + jeison.musics[i].id + "'>" +
-      "<div class='icon_wrapper'>" +
-      "<img class='icon' src='images/ei-music.png'>" +
-      "</div>" +
-      "<div class='name_wrapper'>"+
-      "<p class='name'>"+ jeison.musics[i].name +"</p>"+
-      "</div>"+
-      "</li>";
-    }
-    for(i=0;i<jeison.musics.length;i++){
-      $("#" + jeison.musics[i].id).css("background-image", "url(" + "https://img.youtube.com/vi/" + jeison.musics[i].id + "/default.jpg" + ")")
-    }
-    list_flag = true;
-  $('.content').on('click', function() {
-    if(!flag){
-      MainPlayerStarts();
-      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
-      setPlaying();
-      setTimeout(function(){MainPlayer.playVideo();},1000);
-      flag = true;
-    }
-    else{
-      MainPlayerChange($(this).attr("id"));
-      // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
-      setPlaying();
-      setTimeout(function(){MainPlayer.playVideo();},1000);
-    }
-  });
-  }
-  fr.readAsText(file);
-}
-$(function(){
-  $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
-  $("#musicup_inner").on("click",function(){
-    $("#musicup_inner").css("background-color","rgba(255,255,255,0.3)");
-    $("#lobby_inner").css("background-color","");
-    $("#list_wrapper").css("display","block");
-    $("#playlists_wrapper").css("display","none");
-  });
-  $("#lobby_inner").on("click", function(){
-    $("#musicup_inner").css("background-color","");
-    $("#lobby_inner").css("background-color","rgba(255,255,255,0.3)");
-    $("#list_wrapper").css("display","none");
-    $("#playlists_wrapper").css("display","block");
-  });
 });
 function changed(file){
   console.log(file.files[0]);
@@ -271,7 +258,7 @@ setInterval( function(){
     if ( state == YT.PlayerState.ENDED && MainPlayer_status != 0){
       if($(".content").eq(-1).attr("id") == $("#MainPlayer").attr("src").substr(30,11)) {
         $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
-        MainPlayerChange($(".content").eq(0).attr("id"))
+        MainPlayerPlay($(".content").eq(0).attr("id"))
         // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
         setPlaying();
         next = false;
@@ -279,7 +266,7 @@ setInterval( function(){
       }
       else {
         $("#" + $("#MainPlayer").attr("src").substr(30,11)).removeClass("playing");
-        MainPlayerChange($("#" + String($("#MainPlayer").attr("src")).substr(30,11)).next().attr("id"));
+        MainPlayerPlay($("#" + String($("#MainPlayer").attr("src")).substr(30,11)).next().attr("id"));
         // YTGetBackgroundImage(String($("#MainPlayer").attr("src")).substr(30,11), 5);
         setPlaying();
         next = false;
@@ -288,7 +275,7 @@ setInterval( function(){
       MainPlayer_status = 0;
     }
     else if(state == YT.PlayerState.PLAYING && MainPlayer_status != 1){
-      flag = true;
+      isPlayerOnceUsed = true;
       MainPlayer_status = 1;
     }
     else if(state == YT.PlayerState.PAUSED && MainPlayer_status != 2){
